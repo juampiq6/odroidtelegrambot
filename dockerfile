@@ -3,11 +3,9 @@ FROM python:alpine
 COPY . /app 
 WORKDIR /app
 RUN apk update && apk add openrc transmission-daemon
-RUN openrc
-RUN touch /run/openrc/softlevel
-RUN rc-service transmission-daemon start
-RUN pip install pyTelegramBotAPI
+RUN openrc && touch /run/openrc/softlevel
+RUN pip install pyTelegramBotAPI json-rpc
 # Descomentar estos si no tenemos los fuentes del bot, y comentar el COPY
 # RUN git clone https://github.com/juampiq6/odroidtelegrambot.git
 # WORKDIR /app/odroidtelegrambot
-CMD python main.py
+CMD rc-service transmission-daemon start && python main.py
