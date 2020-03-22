@@ -11,15 +11,29 @@ def handleToken():
     if (response.status_code == 409):
         reqHeaders['X-Transmission-Session-Id'] = response.headers['X-Transmission-Session-Id']
 
-def getTorrent():
+def getTorrent(id=None):
     payload = {
         "arguments": {
-             "fields": [ "id", "name", "totalSize", "percentDone", "status", "rateDownload"]
-         },
+            "fields": [ "id", "name", "totalSize", "percentDone", "status", "rateDownload"],
+        },
         "method": "torrent-get",
     }
+    if (id != None):
+        payload['ids'] = id
+    print(payload)
     response = requests.post(url, json=payload, headers=reqHeaders)
     print("@@ getTorrents response -> "+ response.text)
+    return response
+
+def pauseTorrent(id):
+    payload = {
+        "arguments": {
+             "ids": id
+         },
+        "method": "torrent-stop",
+    }
+    response = requests.post(url, json=payload, headers=reqHeaders)
+    print("@@ stopTorrent/"+id+" response -> "+ response.text)
     return response
     
 
@@ -40,7 +54,20 @@ def addTorrent(filename=None, file=None):
     print("@@ addTorrent response -> "+ response.text)
     return response
 
-def startTorrent(id=None):
+def deleteTorrent(withFile, id):
+    payload = {
+        "arguments": {
+             "ids": id,
+             "delete-local-data": withFile
+         },
+        "method":"torrent-remove",
+    }
+    response = requests.post(url, json=payload, headers=reqHeaders)
+    print("@@ deleteTorrent/"+str(id)+" response -> "+ response.text)
+    return response
+
+
+def resumeTorrent(id=None):
     payload = {
         "arguments": {
              "ids": id
@@ -48,30 +75,4 @@ def startTorrent(id=None):
         "method": "torrent-start",
     }
     response = requests.post(url, json=payload, headers=reqHeaders)
-    print("@@ startTorrent response -> "+ response.text)
-
-def pauseTorrent(id=None):
-    payload = {
-        "arguments": {
-             "ids": id
-         },
-        "method": "torrent-stop",
-    }
-    response = requests.post(url, json=payload, headers=reqHeaders)
-    print("@@ stopTorrent response -> "+ response.text)
-
-
-def main():
-
-    handleToken()
-    startTorrent(1)
-    getTorrent()
-
-if __name__ == "__main__":
-    main()
-
-
-
-
-# if __name__ == "__main__":
-#     main()
+    print("@@ startTorrent/"+id+" response -> "+ response.text)
