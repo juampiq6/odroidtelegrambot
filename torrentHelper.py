@@ -14,7 +14,7 @@ def handleToken():
 def getTorrent(id=None):
     payload = {
         "arguments": {
-            "fields": [ "id", "name", "totalSize", "percentDone", "status", "rateDownload"],
+            "fields": [ "id", "name", "totalSize", "percentDone", "leftUntilDone", "status", "rateDownload"],
         },
         "method": "torrent-get",
     }

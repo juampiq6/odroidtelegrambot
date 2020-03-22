@@ -68,13 +68,20 @@ def formatList(data):
             6:"CP",
             4:"DL"
             }
-        return switcher.get(s, "U")
+        return switcher.get(s, str(s))
+    def getDoneNumbers(l,t):
+        tmb = t//(1024*1024)
+        dmb = (t - l)//(1024*1024)
+        return str(dmb)+" of "+str(tmb)+" MB"
     txt = ""
     if (data['arguments']['torrents'] == []):
         txt = "No torrents"
     else:
         for e in data['arguments']['torrents']:
-            txt += '*'+str(e['id'])+')* ('+ getStatusCharacter(e['status']) +') '+ e['name'] + ' *--'+ str(e['percentDone']*100)[0:4] +'%--*\n\n'
+            txt += '*'+str(e['id'])+')* ('+ getStatusCharacter(e['status']) +') '\
+            +e['name'] + '\n*--'+ str(e['percentDone']*100)[0:4] +'%--* '\
+            + getDoneNumbers(e['leftUntilDone'], e['totalSize'])+' - '\
+            +str((e['rateDownload'])//1024)+' KB/s\n\n'
     return txt
 
 @bot.message_handler(commands=['list'])
@@ -83,15 +90,6 @@ def listTorrents(message):
     msg = formatList(json.loads(res.text))
     print(msg)
     bot.send_message(message.chat.id, msg, parse_mode='markdown',disable_web_page_preview=True)
-
-## EXTRA INFO TORRENT
-
-# @bot.message_handler(commands=['info'])
-# def infoTorrent(message):
-#     res = getTorrent()
-#     msg = formatList(json.loads(res.text))
-#     print(msg)
-#     bot.send_message(message.chat.id, msg, parse_mode='markdown')
 
 ## ADD TORRENT
 
