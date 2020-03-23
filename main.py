@@ -111,7 +111,7 @@ def receiveTorrent(message):
             if (isTorrentFile):
                 print(message)
     except Exception as e:
-        bot.reply_to(message, 'Oooops, the error was '+e)
+        bot.reply_to(message, 'Oooops, the error was '+str(e))
 
 def isTorrentFile(message):
     return message.content_type == 'document' and message.document.mime_type == 'application/x-bittorrent'
