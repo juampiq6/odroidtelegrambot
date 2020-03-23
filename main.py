@@ -106,7 +106,7 @@ def receiveTorrent(message):
             if (res.status_code != 200):
                 bot.reply_to(message, 'Error ocurred when trying to add torrent'+res.text)
                 raise Exception('Exception caught when adding a torrent: '+ '[' + res.status_code + ']' + res.text)
-            bot.reply_to(message, 'Ok, downloading the torrent '+res.text['name'])
+            bot.reply_to(message, 'Ok, downloading the torrent '+json.loads(res.text)['name'])
         else:
             if (isTorrentFile):
                 print(message)
