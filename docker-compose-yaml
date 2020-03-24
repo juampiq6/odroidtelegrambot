@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+    pitorrentbot:
+        container-name:"torrentbot_run"
+        image: pitorrentbot:latest
+        volumes:
+            - /media/hdd/torrents/complete:/transmission/complete
+            - /media/hdd/torrents/incomplete:/transmission/incomplete
