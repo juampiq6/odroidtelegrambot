@@ -13,7 +13,7 @@
     "cache-size-mb": 4,
     "dht-enabled": true,
     
-    "download-dir": "/home/juampi/transmission/complete",
+    "download-dir": "/transmission/complete",
 
     "download-queue-enabled": true,
     "download-queue-size": 5,
@@ -21,7 +21,7 @@
     "idle-seeding-limit": 30,
     "idle-seeding-limit-enabled": false,
     
-    "incomplete-dir": "/home/juampi/transmission/incomplete",
+    "incomplete-dir": "/transmission/incomplete",
     
     "incomplete-dir-enabled": true,
     
