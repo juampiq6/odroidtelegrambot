@@ -76,3 +76,23 @@ def resumeTorrent(id=None):
     }
     response = requests.post(url, json=payload, headers=reqHeaders)
     print("@@ startTorrent/"+id+" response -> "+ response.text)
+
+def toggleTurbo():
+    payloadget = {
+        "fields": {
+             "alt-speed-enabled": True
+         },
+        "method": "session-get",
+    }
+    response = requests.post(url, json=payloadget, headers=reqHeaders)
+    value = json.loads(response.text)['arguments']['alt-speed-enabled']
+    print("TURBO MODE was -> "+str(value))
+    payload = {
+        "arguments": {
+             "alt-speed-enabled": not value
+         },
+        "method": "session-set",
+    }
+    response = requests.post(url, json=payload, headers=reqHeaders)
+    print("@@ activateTurbo response -> "+ response.text)
+    return not value

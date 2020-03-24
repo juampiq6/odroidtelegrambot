@@ -106,7 +106,7 @@ def receiveTorrent(message):
             if (res.status_code != 200):
                 bot.reply_to(message, 'Error ocurred when trying to add torrent'+res.text)
                 raise Exception('Exception caught when adding a torrent: '+ '[' + res.status_code + ']' + res.text)
-            bot.reply_to(message, 'Ok, downloading the torrent '+json.loads(res.text)['name'])
+            bot.reply_to(message, 'Ok, downloading the torrent')
         else:
             if (isTorrentFile):
                 print(message)
@@ -182,6 +182,13 @@ def resume(message):
     arg = message.text.split()[1]
     resumeTorrent(int(arg))
     bot.send_message(message.chat.id, "Resumed torrent n° "+arg)
+
+## TURBO MODE
+
+@bot.message_handler(func=lambda message: isCommand(message,com="turbo"))
+def turbo(message):
+    value = toggleTurbo()
+    bot.send_message(message.chat.id, "TURBO MODE "+ ('activated!' if value == True else 'desactivated...'))
 
 ## DEFAULT COMMAND HANDLER
 
