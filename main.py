@@ -200,4 +200,4 @@ def commandDefault(message):
 def notcommandDefault(message):
     bot.send_message(message.chat.id, "I don't understand. I'm a bot, use commands")
 
-bot.polling(interval=1)
+bot.polling(interval=1,none_stop=True)
